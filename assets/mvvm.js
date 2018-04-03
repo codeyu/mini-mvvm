@@ -1,4 +1,5 @@
-﻿// 创建一个Mvvm构造函数
+﻿
+// 创建一个Mvvm构造函数
 // 这里用es6方法将options赋一个初始值，防止没传，等同于options || {}
 function Mvvm(options = {}) {
     // vm.$options Vue上是将所有属性挂载到上面
@@ -23,27 +24,32 @@ function Mvvm(options = {}) {
         });
     }
     // 初始化computed,将this指向实例
-    //initComputed.call(this);
+    initComputed.call(this);
     // 编译    
     new Compile(options.el, this);
-    // 所有事情处理好后执行mounted钩子函数
-    //options.mounted.call(this); // 这就实现了mounted钩子函数
+    if (typeof options.mounted != 'undefined') {
+        // 所有事情处理好后执行mounted钩子函数
+        options.mounted.call(this); // 这就实现了mounted钩子函数
+    }
 }
 function initComputed() {
     let vm = this;
     let computed = this.$options.computed;  // 从options上拿到computed属性   {sum: ƒ, noop: ƒ}
-    // 得到的都是对象的key可以通过Object.keys转化为数组
-    Object.keys(computed).forEach(key => {  // key就是sum,noop
-        Object.defineProperty(vm, key, {
-            // 这里判断是computed里的key是对象还是函数
-            // 如果是函数直接就会调get方法
-            // 如果是对象的话，手动调一下get方法即可
-            // 如： sum() {return this.a + this.b;},他们获取a和b的值就会调用get方法
-            // 所以不需要new Watcher去监听变化了
-            get: typeof computed[key] === 'function' ? computed[key] : computed[key].get,
-            set() { }
+    if (typeof computed != 'undefined') {
+        // 得到的都是对象的key可以通过Object.keys转化为数组
+        Object.keys(computed).forEach(key => {  // key就是sum,noop
+            Object.defineProperty(vm, key, {
+                // 这里判断是computed里的key是对象还是函数
+                // 如果是函数直接就会调get方法
+                // 如果是对象的话，手动调一下get方法即可
+                // 如： sum() {return this.a + this.b;},他们获取a和b的值就会调用get方法
+                // 所以不需要new Watcher去监听变化了
+                get: typeof computed[key] === 'function' ? computed[key] : computed[key].get,
+                set() { }
+            });
         });
-    });
+    }
+
 }
 
 // 创建一个Observe构造函数
@@ -160,9 +166,8 @@ Dep.prototype = {
 };
 // 监听函数
 // 通过Watcher这个类创建的实例，都拥有update方法
-function Watcher(fn) {
+function Watcher(vm, exp, fn) {
     this.fn = fn;   // 将fn放到实例上
-    this.fn = fn;
     this.vm = vm;
     this.exp = exp;
     // 添加一个事件
