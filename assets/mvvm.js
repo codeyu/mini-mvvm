@@ -1,4 +1,4 @@
-﻿
+﻿console.log('start');
 // 创建一个Mvvm构造函数
 // 这里用es6方法将options赋一个初始值，防止没传，等同于options || {}
 function Mvvm(options = {}) {
@@ -9,12 +9,13 @@ function Mvvm(options = {}) {
     let data = this._data = this.$options.data;
 
     // 数据劫持
-    observe(data);
+    var dep = observe(data);
 
     // this 代理了this._data
     for (let key in data) {
         Object.defineProperty(this, key, {
-            configurable: true,
+            configurable: false,
+            enumerable: true,
             get() {
                 return this._data[key];     // 如this.a = {b: 1}
             },
@@ -24,14 +25,18 @@ function Mvvm(options = {}) {
         });
     }
     // 初始化computed,将this指向实例
-    initComputed.call(this);
+    // initComputed.call(this);
     // 编译    
     new Compile(options.el, this);
     if (typeof options.mounted != 'undefined') {
         // 所有事情处理好后执行mounted钩子函数
         options.mounted.call(this); // 这就实现了mounted钩子函数
     }
+
+    console.log('mounted');
+    dep.notify();
 }
+
 function initComputed() {
     let vm = this;
     let computed = this.$options.computed;  // 从options上拿到computed属性   {sum: ƒ, noop: ƒ}
@@ -49,7 +54,6 @@ function initComputed() {
             });
         });
     }
-
 }
 
 // 创建一个Observe构造函数
@@ -62,12 +66,14 @@ function Observe(data) {
         let val = data[key];
         observe(val);   // 递归继续向下找，实现深度的数据劫持
         Object.defineProperty(data, key, {
-            configurable: true,
+            configurable: false,
+            enumerable: true,
             get() {
                 Dep.target && dep.addSub(Dep.target);   // 将watcher添加到订阅事件中 [watcher]
                 return val;
             },
             set(newVal) {   // 更改值的时候
+                console.log('set', newVal);
                 if (val === newVal) {   // 设置的值和以前值一样就不理它
                     return;
                 }
@@ -77,6 +83,10 @@ function Observe(data) {
             }
         });
     }
+
+    // dep.notify();
+    console.log(dep);
+    return dep;
 }
 
 // 外面再写一个函数
@@ -103,7 +113,7 @@ function Compile(el, vm) {
     function replace(frag) {
         Array.from(frag.childNodes).forEach(node => {
             let txt = node.textContent;
-            let reg = /\{\{(.*)\}\}/;   // 正则匹配{{}}
+            const reg = /\{\{\s*([^}]+\S)\s*\}\}/g;   // 正则匹配{{}}
 
             if (node.nodeType === 3 && reg.test(txt)) { // 即是文本节点又有大括号的情况{{}}
                 console.log(RegExp.$1); // 匹配到的第一个分组 如： a.b, c
@@ -114,8 +124,9 @@ function Compile(el, vm) {
                 });
                 // 监听变化
                 // 给Watcher再添加两个参数，用来取新的值(newVal)给回调函数传参
-                new Watcher(vm, RegExp.$1, newVal => {
-                    node.textContent = txt.replace(reg, newVal).trim();
+                // node.textContent = txt.replace(reg, val).trim();
+                new Watcher(vm, RegExp.$1, val => {
+                    node.textContent = txt.replace(reg, val).trim();
                 });
             }
             if (node.nodeType === 1) {  // 元素节点
@@ -180,7 +191,9 @@ function Watcher(vm, exp, fn) {
     });
     Dep.target = null;
 }
+
 Watcher.prototype.update = function () {
+    console.log('update');
     // notify的时候值已经更改了
     // 再通过vm, exp来获取新的值
     let arr = this.exp.split('.');

@@ -9,9 +9,11 @@
         <p>主打歌为{{album.theme}}</p>
         <p>作词人为{{singer}}等人。</p>
         为你弹奏肖邦的{{album.theme}}
+
+        <input name="singerName" v-model="{{singer}}" value=""></input>
     </div>
     <!--实现的mvvm-->
-    <script src="mvvm.js?v=0.33"></script>
+    <script src="mvvm.js?v=0.11"></script>
     <script>
         // 写法和Vue一样
         let mvvm = new Mvvm({
@@ -25,6 +27,7 @@
                 singer: '周杰伦'
             }
         });
+        console.log(mvvm);
     </script>
 </body>
 
