@@ -2,7 +2,7 @@
   "name": "mini-mvvm",
   "version": "1.0.0",
   "description": "mini mvvm framework",
-  "repository":"https://github.com/codeyu/mini-mvvm",
+  "repository": "https://github.com/codeyu/mini-mvvm",
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --env development",
@@ -19,8 +19,11 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
+    "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.20.3",
     "webpack": "^4.5.0",
     "webpack-cli": "^2.0.14",
     "webpack-dev-server": "^3.1.3"

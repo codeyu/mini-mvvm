@@ -3,14 +3,33 @@
 <head></head>
 
 <body>
-    <div id="app">
-        <h1>{{song}}</h1>
-        <p>《{{album.name}}》是{{singer}}2005年11月发行的专辑</p>
-        <p>主打歌为{{album.theme}}</p>
-        <p>作词人为{{singer}}等人。</p>
-        为你弹奏肖邦的{{album.theme}}
-        <br /> 修改作词人：
-        <input name="singerName" v-model="singer" />
+    <div class="container" id="app">
+        <div class="container-line">
+            <h1 class="focus-txt">{{song}}</h1>
+        </div>
+        <div class="container-line">
+            《
+            <span>{{album.name}}</span>》是
+            <span>{{singer}}</span>2005年11月发行的专辑
+        </div>
+        <div class="container-line">
+            主打歌为
+            <span>{{album.theme}}</span>
+
+        </div>
+        <div class="container-line">
+            作词人为
+            <span>{{singer}}</span>等人。
+        </div>
+        <div class="container-line">
+            为你弹奏肖邦的
+            <span>{{album.theme}}</span>
+
+        </div>
+        <div class="container-line">
+            歌手姓名：
+            <input name="singerName" v-model="singer" />
+        </div>
     </div>
 </body>
 

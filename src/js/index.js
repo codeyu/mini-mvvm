@@ -1,4 +1,5 @@
 import Mvvm from './Mvvm'
+require('../css/style.css');
 let mvvm = new Mvvm({
     el: '#app',
     data: { 

@@ -1,7 +1,7 @@
 const HtmlwebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const outPath = path.resolve(__dirname,'dist')
 const entryPath = path.resolve('./src/js/index.js')
 module.exports = {
@@ -20,6 +20,13 @@ module.exports = {
         options: {
           presets: ['env']
         }
+      },
+      {
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+              fallback: 'style-loader',
+              use: ['css-loader']
+          })
       }
     ]
   },
@@ -28,7 +35,8 @@ module.exports = {
       title: 'mini-mvvm',
       template: './src/index.html'
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new ExtractTextPlugin("style.css"),
+    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     compress: true,
