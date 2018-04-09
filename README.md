@@ -2,7 +2,9 @@
 
 实现：https://juejin.im/post/5abdd6f6f265da23793c4458
 
-运行步骤：
+Demo： http://codeyu.com/mini-mvvm/
+
+本地运行步骤：
 
 1. 命令行运行：
 ```
