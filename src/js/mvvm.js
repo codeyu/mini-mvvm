@@ -105,7 +105,7 @@ function Compile(el, vm) {
     // 在el范围里将内容都拿到，当然不能一个一个的拿
     // 可以选择移到内存中去然后放入文档碎片中，节省开销
     let fragment = document.createDocumentFragment();
-
+    let child;
     while (child = vm.$el.firstChild) {
         fragment.appendChild(child);    // 此时将el中的内容放入内存中
     }
@@ -204,3 +204,4 @@ Watcher.prototype.update = function () {
     this.fn(val);   // 将每次拿到的新值去替换{{}}的内容即可
 };
 
+export default Mvvm

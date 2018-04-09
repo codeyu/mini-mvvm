@@ -1,11 +1,26 @@
 {
   "name": "mini-mvvm",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "mini mvvm framework",
+  "main": "index.js",
   "scripts": {
+    "dev": "webpack-dev-server --env development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "mvvm",
+    "javascript"
+  ],
+  "author": "codeyu",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.5.0",
+    "webpack-cli": "^2.0.14",
+    "webpack-dev-server": "^3.1.3"
+  }
 }
