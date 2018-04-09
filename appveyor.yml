@@ -24,12 +24,14 @@ install:
   # - ps: [Environment]::SetEnvironmentVariable("Path", "$env:Path;c:\Users\Me\AppData\Roaming\npm\", "User")
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  # install modules
-  - npm install
+
+ 
  
 build_script:
+  # install modules
+  - npm install
   # run webpack with production flag
-  - make
+  - webpack -p
 test: off
 on_success:
   # - gh-pages deploy
