@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack-dev-server --env development",
-    "build": "webpack -p --progress --colors",
+    "build": "webpack -p --colors",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

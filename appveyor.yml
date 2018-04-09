@@ -41,8 +41,9 @@ on_success:
   - git config --global user.email "$($env:git_email)"
   - git config --global user.name "codeyu"
   - git config --global core.autocrlf true
-  - git clone -b gh-pages "https://github.com/codeyu/mini-mvvm.git" gh-pages
+  - git clone "https://github.com/codeyu/mini-mvvm.git" gh-pages
   - cd gh-pages
+  - git checkout -b gh-pages
   - ps: if (-not $?) { throw "Cloning gh-pages failed" }
   - ps: Remove-Item * -Recurse
   - ps: Copy-Item ..\dist\* . -Recurse
