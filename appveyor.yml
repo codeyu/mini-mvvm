@@ -24,10 +24,13 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install 
+  - npm install -g webpack
+ 
 
-build_script:
-  - ps: webpack
+before_build:
+  - npm install 
+build:
+  - webpack
 test: off
 on_success:
   # - gh-pages deploy
