@@ -1,0 +1,2 @@
+default:
+	webpack -p

@@ -18,19 +18,18 @@ branches:
     - master
 # Install scripts. (runs after repo cloning)
 install:
-  # - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe 
-  # - set PATH=%PATH%;C:\MinGW\bin
+  - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe 
+  - set PATH=%PATH%;C:\MinGW\bin
   # - ps: $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+  # - ps: [Environment]::SetEnvironmentVariable("Path", "$env:Path;c:\Users\Me\AppData\Roaming\npm\", "User")
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # install modules
-  - npm install -g webpack
+  - npm install
  
-
-before_build:
-  - npm install 
-build:
-  - webpack
+build_script:
+  # run webpack with production flag
+  - make
 test: off
 on_success:
   # - gh-pages deploy
