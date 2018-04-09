@@ -32,7 +32,7 @@ install:
  
 build_script: 
   # run webpack with production flag
-  - webpack -p
+  - npm run build
 test: off
 on_success:
   # - gh-pages deploy
