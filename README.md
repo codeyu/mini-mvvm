@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/98qfxk1otlu7526v/branch/master?svg=true)](https://ci.appveyor.com/project/codeyu/mini-mvvm/branch/master)
+
 实现：https://juejin.im/post/5abdd6f6f265da23793c4458
 
 运行步骤：
