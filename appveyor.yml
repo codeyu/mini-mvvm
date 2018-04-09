@@ -16,8 +16,7 @@ pull_requests:
 branches:
   only:
     - master
-cache:
-  - node_modules
+
 # Install scripts. (runs after repo cloning)
 install:
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe 
@@ -49,4 +48,4 @@ on_success:
   - ps: Copy-Item ..\dist\* . -Recurse
   - git add --all .
   - git commit -m "update dist"
-  - git push origin gh-pages
+  - git push -f origin gh-pages
