@@ -27,7 +27,7 @@ install:
   - npm install 
 
 build_script:
-  - webpack
+  - ps: webpack
 test: off
 on_success:
   # - gh-pages deploy
