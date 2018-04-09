@@ -16,6 +16,8 @@ pull_requests:
 branches:
   only:
     - master
+cache:
+  - node_modules
 # Install scripts. (runs after repo cloning)
 install:
   - copy C:\MinGW\bin\mingw32-make.exe C:\MinGW\bin\make.exe 
@@ -24,12 +26,11 @@ install:
   # - ps: [Environment]::SetEnvironmentVariable("Path", "$env:Path;c:\Users\Me\AppData\Roaming\npm\", "User")
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-
- 
- 
-build_script:
   # install modules
   - npm install
+ 
+ 
+build_script: 
   # run webpack with production flag
   - webpack -p
 test: off
