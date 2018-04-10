@@ -116,18 +116,18 @@ function Compile(el, vm) {
             const reg = /\{\{\s*([^}]+\S)\s*\}\}/g;   // 正则匹配{{}}
 
             if (node.nodeType === 3 && reg.test(txt)) { // 即是文本节点又有大括号的情况{{}}
-                console.log(RegExp.$1); // 匹配到的第一个分组 如： a.b, c
-                let arr = RegExp.$1.split('.');
-                let val = vm;
-                arr.forEach(key => {
-                    val = val[key];     // 如this.a.b
-                });
-                // 监听变化
-                // 给Watcher再添加两个参数，用来取新的值(newVal)给回调函数传参
-                // node.textContent = txt.replace(reg, val).trim();
-                new Watcher(vm, RegExp.$1, val => {
-                    node.textContent = txt.replace(reg, val).trim();
-                });
+                function replaceTxt() {
+                    node.textContent = txt.replace(reg, (matched, placeholder) => {
+                        console.log(placeholder);   // 匹配到的分组 如：song, album.name, singer...
+                        new Watcher(vm, placeholder, replaceTxt);   // 监听变化，进行匹配替换内容
+
+                        return placeholder.split('.').reduce((val, key) => {
+                            return val[key];
+                        }, vm);
+                    });
+                };
+                // 替换
+                replaceTxt();
             }
             if (node.nodeType === 1) {  // 元素节点
                 let nodeAttr = node.attributes; // 获取dom上的所有属性,是个类数组
