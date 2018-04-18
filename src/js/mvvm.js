@@ -35,6 +35,7 @@ function Mvvm(options = {}) {
 
     console.log('mounted');
     dep.notify();
+    this.initMounted = true
 }
 
 function initComputed() {
@@ -119,7 +120,7 @@ function Compile(el, vm) {
                 function replaceTxt() {
                     node.textContent = txt.replace(reg, (matched, placeholder) => {
                         console.log(placeholder);   // 匹配到的分组 如：song, album.name, singer...
-                        new Watcher(vm, placeholder, replaceTxt);   // 监听变化，进行匹配替换内容
+                        vm.initMounted || new Watcher(vm, placeholder, replaceTxt);   // 监听变化，进行匹配替换内容
 
                         return placeholder.split('.').reduce((val, key) => {
                             return val[key];
